@@ -1,15 +1,28 @@
 [CmdletBinding()]
 <#
 .SYNOPSIS
-This script registers a consumer application in Azure AD.
+Script to map the consumers of an application registration.
 
 .PARAMETER TargetAppId
-Specifies the target application ID for the consumer app registration. This parameter is mandatory.
+Define the client ID of the app registration you are interested in.
 
 .PARAMETER InDepthSearch
 Indicates whether to perform an in-depth search. This is an optional switch parameter with a default value of $false.
 
 #>
+param (
+    [Parameter(Mandatory)]
+    [string]
+    $TargetAppId,
+
+    [Parameter()]
+    [switch]
+    $InDepthSearch = $false
+)
+
+function Get-Consumers {
+    param (
+        [string]$appId,
         [array]$allApps
     )
     $filteredApps = $allApps | Where-Object {
